@@ -75,14 +75,14 @@ class QuestionScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                            Text(
-                            "LEVEL${level+1}",
+                            "DAY ${level+1}",
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.brown,
                                 fontSize: 22),
                           ),
                           const Text(
-                            " / 7",
+                            " / 8",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,

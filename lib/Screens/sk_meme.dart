@@ -9,7 +9,7 @@ class SkMeme extends StatelessWidget {
       backgroundColor:Colors.black,
 
       body: Container(
-        child: Image(image: AssetImage("assets/sureshkrishna.png")),
+        child: const Image(image: AssetImage("assets/sureshkrishna.png")),
       ),
     );
   }

@@ -6,22 +6,23 @@ import 'package:flutter/material.dart';
 
 class AnswerScreen extends StatelessWidget {
   int level;
-   AnswerScreen({required this.level, super.key});
+  AnswerScreen({required this.level, super.key});
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController _controller = TextEditingController();
 
     return Scaffold(
+       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
-          const SizedBox(
+          SizedBox(
             height: double.infinity,
             width: double.infinity,
             child: Opacity(
               opacity: 0.6,
               child: Image(
-                image: AssetImage("assets/bg2.jpg"),
+                image: AssetImage(bg_images[level]),
                 fit: BoxFit.cover,
               ),
             ),
@@ -30,7 +31,7 @@ class AnswerScreen extends StatelessWidget {
             height: double.infinity,
             width: double.infinity,
             color: Colors.black.withOpacity(
-                0.4), // Adjust opacity here for darker or lighter shade
+                0.7), // Adjust opacity here for darker or lighter shade
           ),
           AppBar(
               backgroundColor: Colors.black12,
@@ -38,66 +39,72 @@ class AnswerScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 color: kwhite,
                 iconSize: 30,
               )),
-          Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 2.7,
-                ),
-                Text(
-                  'Enter the answer of Level ${level+1}',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 25, color: kwhite),
-                ),
-                Padding(
-                  padding:  EdgeInsets.all(28.0),
-                  child: TextField(
-                    style: TextStyle(fontSize: 24,color: kwhite),
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: kwhite), // Focused border color
-                      ),
-                    ),
+          SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 2.7,
                   ),
-                ),
-                
-                ElevatedButton(
-                  onPressed: () {
-                    var text = _controller.text.toString();
-                    String formattedText = FormatText(text);
-                    if (formattedText == answers[level]) {
+                  Text(
+                    'Enter the answer of Day ${level + 1}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 25, color: kwhite),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(28.0),
+                    child: Container(
+                      height: 70,
+                      decoration: BoxDecoration(
                       
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QuestionScreen(level: level+1,),
-                      ));
-                    } else {
-                      TrollPopup.show(context);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15), // Padding
-                    shape: RoundedRectangleBorder(
-                      // Shape
-                      borderRadius: BorderRadius.circular(10),
+                      color: kwhite,
+                      borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(
+                          child: TextField(
+                            style: TextStyle(fontSize: 24, color: kblack,),
+                            controller: _controller,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    elevation: 5, // Elevation
                   ),
-                  child: const Text('Submit Answer',
-                      style: TextStyle(color: Colors.white, fontSize: 15)),
-                ),
-              ],
+                  ElevatedButton(
+                    onPressed: () {
+                      var text = _controller.text.toString();
+                      String formattedText = FormatText(text);
+                      if (formattedText == answers[level]) {
+                       var a= CorrectTrollPopup(level: level);
+                        a.show(context);
+                      } else {
+                        WrongTrollPopup.show(context);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15), // Padding
+                      shape: RoundedRectangleBorder(
+                        // Shape
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 5, // Elevation
+                    ),
+                    child: const Text('Submit Answer',
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
+                  ),
+                ],
+              ),
             ),
           )
         ],
